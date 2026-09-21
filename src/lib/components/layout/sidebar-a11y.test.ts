@@ -35,6 +35,8 @@ describe('sidebar accessibility markup', () => {
 	it('does not expose folder controls through a parent button role', () => {
 		expect(folder).not.toMatch(/role="button"[\s\S]*?<button/);
 		expect(folder).toContain('on:pointerup|stopPropagation');
+		expect(folderMenu).toContain('<button');
+		expect(folderMenu).toContain('on:pointerup|stopPropagation');
 	});
 
 	it('names the folder menu and reveals it on keyboard focus', () => {
@@ -45,6 +47,11 @@ describe('sidebar accessibility markup', () => {
 
 	it('uses an accessible default contrast for section actions', () => {
 		expect(section).toContain('text-gray-500 hover:text-gray-700 dark:text-gray-400');
+	});
+
+	it('isolates section action clicks from section toggling', () => {
+		expect(section).toContain('on:pointerup|stopPropagation');
+		expect(section).toContain('e.stopPropagation();');
 	});
 
 	it('compiles the skip link and its programmatically focusable destination', () => {
